@@ -26,7 +26,7 @@ public class UserController {
 
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -37,57 +37,47 @@ public class UserController {
 		modelAndView.addObject("users", users);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping("new")
-	public String formNew(User user){
+	public String formNew(User user) {
 		return "user_new";
 	}
-	
+
 	@PostMapping()
 	public String save(@Valid User user, BindingResult result, RedirectAttributes redirect) {
-		if (result.hasErrors()) return "user_new";
+		if (result.hasErrors())
+			return "user_new";
 		repository.save(user);
 		redirect.addFlashAttribute("message", getMessage("message.newuser.success"));
 		return "redirect:/user";
 	}
-	
+
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable Long id, RedirectAttributes redirect) {
 		repository.deleteById(id);
 		redirect.addFlashAttribute("message", getMessage("message.deleteuser.success"));
 		return "redirect:/user";
 	}
-	
+
 	@GetMapping("/{id}")
 	public ModelAndView editUserForm(@PathVariable Long id) {
 		Optional<User> user = repository.findById(id);
 		ModelAndView modelAndView = new ModelAndView("user_edit");
 		modelAndView.addObject("user", user);
-		return modelAndView;		
+		return modelAndView;
 	}
-	
+
 	@PostMapping("/update")
 	public String updateUser(@Valid User user, BindingResult result, RedirectAttributes redirect) {
-		if (result.hasErrors()) return "user_edit";
+		if (result.hasErrors())
+			return "user_edit";
 		repository.save(user);
 		redirect.addFlashAttribute("message", getMessage("message.edituser.success"));
-		return "redirect:/user"; 
+		return "redirect:/user";
 	}
-	
+
 	private String getMessage(String code) {
 		return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

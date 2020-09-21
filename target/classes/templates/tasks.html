@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:include="_template :: head"></head>
-
 <body>
-	<h1>Epic Task</h1>
+	<h1>Epic task</h1>
 
 	<nav th:include="_template :: menu('task')"></nav>
 
@@ -13,24 +11,38 @@
 	</a>
 
 	<div class="content">
-		<div class="task" th:each="task : ${tasks}">
-			<div class="task-info">
-				<h4 th:text="${task.title}"></h4>
-				<p th:text="${task.id}"></p>
-				<p th:text="${task.description}"></p>
-				<p th:text="${task.point}"></p>
-				<p th:text="${task.status}"></p>
 
-				<div class="task-action">
-					<a th:href="@{/task/new/{id}(id=${task.id})}"> <span
-						class="material-icons yellow">create</span>
-					</a>
+		<span class="alert" th:if="${message != null} " th:text="${message}"></span>
+
+		<div class="tasks">
+			<div class="card-task" th:each="task : ${tasks}">
+				<h2 th:text="${task.title}"></h2>
+				<div class="point">
+					<span class="material-icons">star</span> <span
+						th:text="${task.point}"></span>
 				</div>
+
+				<div class="status">
+					<svg>
+						<circle cx="70" cy="70" r="70"></circle>
+						<circle cx="70" cy="70" r="70"
+							th:style="${'stroke-dashoffset:' + (440 - (440 * task.status )/100 ) }"></circle>
+					</svg>
+					<div class="number">
+						<h2 th:inline="text">[[${task.status}]]%</h2>
+					</div>
+				</div>
+
+				<button class="btn-hand">
+					<span class="material-icons">pan_tool</span>
+				</button>
+				<a class="btn btn-sm red" th:href="${'/task/delete/' + task.id}">
+					<span class="material-icons red">delete</span>
+				</a> <a class="btn btn-sm yellow" th:href="${'/task/' + task.id}"> <span
+					class="material-icons">edit</span>
+				</a>
 			</div>
-
 		</div>
-
-
 	</div>
 </body>
 </html>
