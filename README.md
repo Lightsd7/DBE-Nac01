@@ -18,4 +18,4 @@ Esse repositório faz parte da disciplina de Digital Business Enablement da FIAP
 - [X] Foto do usuário
 - [X] Editar usuário
 - [X] Navegação (class active)
-- [ ] CRUD de Tarefas
+- [X] CRUD de Tarefas
