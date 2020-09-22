@@ -47,7 +47,7 @@ public class TaskController {
 		if (result.hasErrors())
 			return "task_new";
 		repository.save(task);
-		redirect.addFlashAttribute("message", "Tarefa cadastrada com sucesso!");
+		redirect.addFlashAttribute("message", getMessage("message.newtask.success"));
 		return "redirect:/task";
 	}
 
@@ -62,7 +62,7 @@ public class TaskController {
 	@GetMapping("/delete/{id}")
 	public String deleteTask(@PathVariable Long id, RedirectAttributes redirect) {
 		repository.deleteById(id);
-		redirect.addFlashAttribute("message", "Tarefa apagada com sucesso!");
+		redirect.addFlashAttribute("message", getMessage("message.deletetask.success"));
 		return "redirect:/task";
 	}
 
@@ -71,7 +71,11 @@ public class TaskController {
 		if (result.hasErrors())
 			return "task_edit";
 		repository.save(task);
-		redirect.addFlashAttribute("message", "Tarefa atualizada com sucesso!");
+		redirect.addFlashAttribute("message", getMessage("message.updatetask.success"));
 		return "redirect:/task";
+	}
+
+	private String getMessage(String code) {
+		return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
 	}
 }

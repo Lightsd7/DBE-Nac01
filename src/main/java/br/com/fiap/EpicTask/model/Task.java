@@ -16,11 +16,11 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "O título da task é obrigatório")
+	@NotBlank(message = "{task.title.blank}")
 	private String title;
 
-	@NotBlank(message = "O título da task é obrigatório")
-	@Size(max = 140, message = "A descrição precisa ser mais objetiva")
+	@NotBlank(message = "{task.description.blank}")
+	@Size(max = 140, message = "{task.description.size}")
 	private String description;
 
 //	@Size(min = 1, max = 100, message = "Pontuação precisar ser entre 1 e 100")
